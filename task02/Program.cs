@@ -22,6 +22,19 @@ namespace task02
             Keys.Add(key);
             Values.Add(value);
         }
+        public string this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < Values.Length)
+                {
+                    return Values[index].ToString();
+                }
+                return "Выход за пределы массива";
+            }
+        }
+
+        public int Length => Keys.Length;
 
         public bool MoveNext()
         {
@@ -45,17 +58,7 @@ namespace task02
 
         public object Current => Keys[position] + " " + Values[position];
 
-        public string this[int index]
-        {
-            get
-            {
-                if (index >= 0 && index < Values.Length)
-                {
-                    return Values[index].ToString();
-                }
-                return "Выход за пределы массива";
-            }
-        }
+       
     }
     class Program
     {
@@ -73,7 +76,7 @@ namespace task02
             // foreach - приводит коллекцию к интерфейсному типу IEnumerable.
             // Своими словами - foreach,для его работы, проверяет наличие метода GetEnumerator() в экземпляре, поскольку метод был реализован с явным указанием имени типа, он является private, и для того, чтобы его стало видно, необходимо привестись с данному типу(IEnumerable) 
             IEnumerable enumerable = MyDic.Keys as IEnumerable;
-            #if false
+            //#if false
             // foreach - приводит коллекцию к интерфейсному типу вызывая метод - GetEnumerator().            
             IEnumerator enumerator = enumerable.GetEnumerator();
 
@@ -87,7 +90,7 @@ namespace task02
             Console.WriteLine(new string('+', 60));
             
             enumerator.Reset();
-                #endif
+          //      #endif
             foreach (var item in MyDic.Keys)
             {
                 //Object element = enumerator.Current as Object;
@@ -103,6 +106,9 @@ namespace task02
                 Console.WriteLine(item.ToString());
                 //Console.WriteLine("Value: {0}", element.ToString());
             }
+            Console.WriteLine(new string('*', 60));
+            Console.WriteLine(MyDic[1]);
+            
             Console.ReadKey();
         
 
