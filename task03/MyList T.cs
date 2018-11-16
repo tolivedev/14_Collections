@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace task01
+namespace task03
 {
-
-    class MyList<T>: IEnumerable<T>, IEnumerator, IEnumerator<T>
+    class MyList<T> : IEnumerable<object>, IEnumerator, IEnumerator<object>
     {
         private T[] arr = new T[0];
         private int position = -1;
@@ -26,11 +25,10 @@ namespace task01
         }
         public void Clear() => arr = new T[0];
         public int Count => arr.Length; //return arr.Length;
-        public object Current => arr[position]; 
+        public object Current => arr[position];
 
-        T IEnumerator<T>.Current => arr[position];
+        object IEnumerator<object>.Current => arr[position];
 
-        public IEnumerator<T> GetEnumerator() => this as IEnumerator<T>;
         public bool MoveNext()
         {
 
@@ -48,14 +46,22 @@ namespace task01
             position = -1;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+
+
+        IEnumerator<object> IEnumerable<object>.GetEnumerator()
         {
-            return this as IEnumerator<T>;
+            return this;
         }
 
         public void Dispose()
         {
             //throw new NotImplementedException();
+            Reset();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+           return (this as IEnumerable<T>).GetEnumerator();
         }
     }
 }
